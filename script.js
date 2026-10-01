@@ -32,6 +32,11 @@
     setTimeout(() => {
       acc.hidden = true;
       if (card) card.classList.remove('card-returning');
+      // Release frozen heights unless another panel opened in this row meanwhile
+      const row = acc.closest('.sample-row');
+      if (row && !row.querySelector('.accordion-panel.open')) {
+        row.querySelectorAll('.sample-card').forEach(c => { c.style.height = ''; });
+      }
     }, 420);
     openCard = null;
   }
@@ -42,6 +47,12 @@
     const acc = document.getElementById(cfg.acc);
     const card = document.querySelector(`.sample-card[data-card="${id}"]`);
     const btn = document.querySelector(`.info-btn[data-card="${id}"]`);
+
+    // Freeze the cards in this row at their current size, so none of them grows or shrinks
+    const row = acc.closest('.sample-row');
+    if (row) {
+      row.querySelectorAll('.sample-card').forEach(c => { c.style.height = c.offsetHeight + 'px'; });
+    }
 
     acc.hidden = false;
     // Force reflow so transition fires

@@ -116,6 +116,10 @@
     lightboxIndex = index;
     lightboxImage.src = img.src;
     lightboxImage.alt = img.alt || 'Expanded image preview';
+    // Tall images (diagrams) open at full width and scroll, so their text stays readable
+    const isTall = img.naturalWidth > 0 && img.naturalHeight > img.naturalWidth * 1.4;
+    lightbox.classList.toggle('is-tall', isTall);
+    lightbox.scrollTop = 0;
     if (lightboxCaption) lightboxCaption.textContent = lightboxTitle;
   }
 

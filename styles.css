@@ -535,6 +535,17 @@ body.is-scrolling .profile-speech {
   cursor: zoom-out;
 }
 
+/* Tall images: full width, vertical scrolling */
+.lightbox.is-tall {
+  overflow-y: auto;
+  place-items: start center;
+}
+
+.lightbox.is-tall .lightbox-image {
+  max-width: min(1400px, 94vw);
+  max-height: none;
+}
+
 .lightbox-caption {
   color: #fff;
   font-weight: 800;

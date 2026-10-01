@@ -7,8 +7,8 @@
     4: { acc: 'acc-4', side: 'right' },
     5: { acc: 'acc-5', side: 'left' },
     6: { acc: 'acc-6', side: 'right' },
-    7: { acc: 'acc-7', side: 'right' },
-    8: { acc: 'acc-8', side: 'left' },
+    7: { acc: 'acc-7', side: 'left' },
+    8: { acc: 'acc-8', side: 'right' },
     9: { acc: 'acc-9', side: 'left' },
   };
 

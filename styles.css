@@ -358,9 +358,14 @@ body.is-scrolling .profile-speech {
   grid-row: 1;
 }
 
-/* While an Info panel is open, cards keep their natural height */
-.sample-row:has(.card-shifted) > .sample-card {
+/* While an Info panel is visible (opening, open or closing), cards keep their natural height */
+.sample-row:has(.accordion-panel:not([hidden])) > .sample-card {
   align-self: start;
+}
+
+/* A card sliding back to its column stays above its neighbour */
+.sample-card.card-returning {
+  z-index: 3;
 }
 
 .sample-slot-empty {

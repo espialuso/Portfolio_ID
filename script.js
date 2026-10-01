@@ -22,10 +22,17 @@
     const btn = document.querySelector(`.info-btn[data-card="${id}"]`);
 
     acc.classList.remove('open');
-    if (card) card.classList.remove('card-shifted');
+    if (card) {
+      // Stay on top while sliding back, so the card never passes under its neighbour
+      card.classList.add('card-returning');
+      card.classList.remove('card-shifted');
+    }
     if (btn) btn.setAttribute('aria-expanded', 'false');
 
-    setTimeout(() => { acc.hidden = true; }, 420);
+    setTimeout(() => {
+      acc.hidden = true;
+      if (card) card.classList.remove('card-returning');
+    }, 420);
     openCard = null;
   }
 

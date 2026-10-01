@@ -9,6 +9,7 @@
     6: { acc: 'acc-6', side: 'right' },
     7: { acc: 'acc-7', side: 'right' },
     8: { acc: 'acc-8', side: 'left' },
+    9: { acc: 'acc-9', side: 'left' },
   };
 
   let openCard = null;

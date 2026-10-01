@@ -136,7 +136,7 @@ img {
 .btn:hover {
   transform: translateY(-2px);
   border-color: var(--accent);
-  box-shadow: var(--shadow), 0 0 0 3px rgba(255,192,0,.32);
+  box-shadow: var(--shadow);
 }
 
 .btn.primary {
@@ -358,12 +358,20 @@ body.is-scrolling .profile-speech {
   grid-row: 1;
 }
 
+/* While an Info panel is open, cards keep their natural height */
+.sample-row:has(.card-shifted) > .sample-card {
+  align-self: start;
+}
+
 .sample-slot-empty {
   grid-column: 2;
   grid-row: 1;
 }
 
 .sample-card {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   transition: transform .22s ease, border-color .22s ease;
   position: relative;
@@ -375,7 +383,6 @@ body.is-scrolling .profile-speech {
 .sample-card:hover {
   transform: translateY(-4px);
   border-color: var(--accent);
-  box-shadow: var(--shadow), 0 0 0 4px rgba(255,192,0,.28);
 }
 
 .sample-card.side-left.card-shifted {
@@ -407,6 +414,9 @@ body.is-scrolling .profile-speech {
 }
 
 .sample-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   padding: 1rem 1rem 1.1rem;
   background: #fff;
 }
@@ -432,7 +442,8 @@ body.is-scrolling .profile-speech {
   display: flex;
   flex-wrap: wrap;
   gap: .7rem;
-  margin-top: 1rem;
+  margin-top: auto;
+  padding-top: 1rem;
 }
 
 .info-btn,
@@ -552,7 +563,7 @@ body.is-scrolling .profile-speech {
 }
 
 .lightbox-nav:hover {
-  box-shadow: 0 0 0 4px rgba(255,192,0,.32);
+  box-shadow: var(--shadow);
 }
 
 .lightbox-close {
@@ -570,7 +581,7 @@ body.is-scrolling .profile-speech {
 }
 
 .lightbox-close:hover {
-  box-shadow: 0 0 0 3px rgba(255,192,0,.32);
+  box-shadow: var(--shadow);
 }
 
 .process-cycle {
@@ -681,7 +692,7 @@ body.is-scrolling .profile-speech {
 .process-step:hover .process-node,
 .process-step:focus-within .process-node {
   transform: scale(1.15);
-  box-shadow: var(--shadow), 0 0 0 4px rgba(255,192,0,.28);
+  box-shadow: var(--shadow);
 }
 
 .process-step:hover .process-label,

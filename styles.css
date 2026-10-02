@@ -1135,3 +1135,127 @@ body.is-scrolling .profile-speech {
     animation: none;
   }
 }
+
+/* =====================================================================
+   LIGNE CLAIRE THEME
+   Paper, one even ink line, colour kept for the portrait, the work
+   thumbnails and the main actions. Overrides the rules above.
+   ===================================================================== */
+:root {
+  --paper: #fbf6e9;      /* album paper */
+  --ink: #2a221d;        /* warm ink, same as the portrait line */
+  --ink-soft: #5f564e;   /* body text */
+  --line: 3px;           /* one line weight everywhere */
+  --bg: var(--paper);
+  --text: var(--ink);
+  --muted: var(--ink-soft);
+  --border: var(--ink);
+  --shadow: none;
+  --radius: 0;
+  --title: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+}
+
+body { background: var(--paper); color: var(--ink); }
+
+/* Top bar: a thin inked strip */
+.topbar { background: var(--paper); backdrop-filter: none; border-bottom: var(--line) solid var(--ink); }
+.nav-links { gap: 1.5rem; color: var(--ink); }
+.nav-links a { font: 600 1.15rem var(--title); letter-spacing: .02em; }
+.nav-links a:hover { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+
+/* ---------- Hero ---------- */
+.about-role-row { --profile-photo-size: 240px; gap: 2.5rem; align-items: flex-end; }
+.photo-wrap { border: var(--line) solid var(--ink); background: #ffedac; box-shadow: none; }
+.about-role-text { justify-content: flex-end; gap: .9rem; }
+.about-role-row .about-role-text h1 { font: 700 clamp(3.4rem, 7vw, 5.6rem)/.9 var(--title); letter-spacing: -.01em; margin: 0; }
+.about-role-text .eyebrow {
+  padding: .3rem .8rem; border-radius: 0; background: #fff; border: var(--line) solid var(--ink);
+  font: 600 1.35rem/1.2 var(--title); letter-spacing: .02em;
+}
+.subtitle span { display: block; } /* two lines, about the width of the name */
+
+/* Speech bubble: ink outline, comic shape, still pops on hover/scroll */
+.profile-speech { border: var(--line) solid var(--ink); border-radius: 2.2rem; white-space: nowrap; padding: .4rem 1.5rem .55rem; }
+.profile-speech::before { border-top-color: var(--ink); }
+
+/* About: no box, a fine rule; the skills row sets the width */
+.panel.about-panel {
+  margin-top: 2.5rem; padding: 1.6rem 0 0;
+  background: none; border: 0; border-top: 1px solid var(--ink); border-radius: 0; box-shadow: none;
+  width: fit-content; max-width: 100%;
+}
+.about-panel p { width: 0; min-width: 100%; max-width: none; }
+
+/* Labels: small ink-outlined tags (skills and sample metadata) */
+.tags span,
+.sample-meta span {
+  padding: .15rem .6rem; border-radius: 0; background: var(--paper); border: 1.5px solid var(--ink);
+  font: 600 1.02rem var(--title); letter-spacing: .02em;
+}
+
+/* Section titles in album lettering */
+.section-head h2 { font: 700 clamp(2.2rem, 4vw, 3rem)/1 var(--title); letter-spacing: 0; margin-bottom: 1.6rem; }
+
+/* ---------- Work samples as BD panels ---------- */
+.sample-grid { gap: 2.2rem; }
+.sample-row { gap: 1.6rem; }
+.sample-card { background: var(--paper); border: 0; border-radius: 0; box-shadow: none; overflow: visible; } /* opaque: it slides over its neighbour when details open */
+.sample-card:hover { transform: none; }
+.sample-thumb { border: var(--line) solid var(--ink); background: #fff; transition: transform .2s ease, box-shadow .2s ease; }
+.sample-card:hover .sample-thumb,
+.sample-thumb:focus-visible { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink); }
+.sample-body { background: transparent; padding: 1rem 0 0; }
+.sample-body h3 { font: 700 1.6rem/1.1 var(--title); margin: 0 0 .35rem; }
+
+/* Buttons: ink frame with an offset shadow that presses in */
+.btn {
+  border: var(--line) solid var(--ink); border-radius: 0; background: #fff; color: var(--ink);
+  font: 700 1.15rem var(--title); letter-spacing: .02em; padding: .45rem 1.1rem;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.btn:hover { transform: translate(-1px, -1px); border-color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+.btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
+.demo-btn { background: var(--accent); }
+.demo-btn:hover { border-color: var(--ink); }
+
+/* Details panel and its gallery */
+.accordion-panel { border: var(--line) solid var(--ink); border-radius: 0; background: #fff; }
+.accordion-panel p { color: var(--ink-soft); }
+.info-images img,
+.info-video { border-radius: 0; border: 1.5px solid var(--ink); }
+.info-images img:hover { border-color: var(--ink); transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--ink); }
+
+/* Wide last card */
+.sample-row.is-solo > .sample-card .sample-thumb { border-right-width: var(--line); }
+.sample-row.is-solo > .sample-card .sample-body { padding: 0 0 0 1.6rem; }
+@media (max-width: 760px) { .sample-row.is-solo > .sample-card .sample-body { padding: 1rem 0 0; } }
+
+/* ---------- Enlarged viewer ---------- */
+.lightbox-image,
+.lightbox-video { border-radius: 0; border: 4px solid var(--paper); }
+.lightbox-caption { font: 700 1.4rem var(--title); letter-spacing: .02em; }
+.lightbox-nav,
+.lightbox-close { border: var(--line) solid var(--ink); border-radius: 0; background: var(--paper); font-family: var(--title); box-shadow: 3px 3px 0 var(--ink); }
+.lightbox-nav:hover,
+.lightbox-close:hover { box-shadow: 4px 4px 0 var(--ink); }
+
+/* ---------- How I work ---------- */
+.process-node { border: var(--line) solid var(--ink); font-family: var(--title); font-size: 1.5rem; }
+.process-label h3 { font: 700 1.3rem var(--title); letter-spacing: .02em; }
+.process-arrow { stroke: var(--ink); }
+.process-arrowhead { fill: var(--ink); }
+.process-center-label { fill: var(--ink-soft); font-family: var(--title); font-size: 1rem; }
+
+.footer { border-top: 1px solid var(--ink); margin-top: 2rem; padding-top: 1.2rem; }
+
+/* ---------- Phones ---------- */
+@media (max-width: 920px) {
+  .about-role-row { align-items: center; }
+}
+
+@media (max-width: 640px) {
+  .about-role-row { --profile-photo-size: 112px; gap: 1rem 1.3rem; }
+  .profile-speech { white-space: normal; padding: .35rem .8rem .45rem; border-radius: 1.4rem; }
+  .profile-speech::before { border-right-color: var(--ink); border-top-color: transparent; }
+  .about-role-row .about-role-text h1 { font-size: 3.2rem; }
+}

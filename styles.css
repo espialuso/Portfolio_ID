@@ -33,6 +33,23 @@ img {
   max-width: 100%;
 }
 
+/* Visible keyboard focus everywhere (only shows for keyboard users, not mouse clicks) */
+:focus-visible {
+  outline: 3px solid var(--accent-dark);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.sample-thumb:focus-visible,
+.info-images img:focus-visible {
+  outline: 4px solid var(--accent-dark);
+  outline-offset: -4px;
+}
+
+.process-label h3:focus-visible {
+  outline-offset: 4px;
+}
+
 .container {
   width: min(var(--container), calc(100% - 2rem));
   margin: 0 auto;
@@ -887,7 +904,7 @@ body.is-scrolling .profile-speech {
 
 @media (max-width: 640px) {
   .container {
-    width: min(var(--container), calc(100% - 1rem));
+    width: min(var(--container), calc(100% - 2.5rem)); /* 20px breathing room each side */
   }
 
   .sample-grid,

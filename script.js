@@ -83,13 +83,30 @@
     });
   });
 
+  // Make a non-button element (image, heading) usable with the keyboard:
+  // reachable with Tab, announced as a button, activated with Enter or Space.
+  function makeKeyboardButton(el, label, onActivate) {
+    el.setAttribute('tabindex', '0');
+    el.setAttribute('role', 'button');
+    if (label) el.setAttribute('aria-label', label);
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        onActivate(e);
+      }
+    });
+  }
+
   // Thumbnails
   document.querySelectorAll('.sample-thumb').forEach(thumb => {
     const card = thumb.closest('.sample-card');
     if (!card) return;
+    const id = Number(card.dataset.card);
+    const title = card.querySelector('h3')?.textContent || 'this sample';
     thumb.addEventListener('click', () => {
-      toggle(Number(card.dataset.card));
+      toggle(id);
     });
+    makeKeyboardButton(thumb, `Show details: ${title}`, () => toggle(id));
   });
 
   // Accordion panels
@@ -109,10 +126,14 @@
   let lightboxImages = [];
   let lightboxIndex = 0;
   let lightboxTitle = '';
+  let lightboxOpener = null; // element to return focus to when the viewer closes
 
   function closeLightbox() {
     if (!lightbox || !lightboxImage) return;
+    if (lightbox.hidden) return;
     lightbox.hidden = true;
+    if (lightboxOpener) lightboxOpener.focus();
+    lightboxOpener = null;
     lightboxImage.src = '';
     lightboxImage.alt = '';
     if (lightboxCaption) lightboxCaption.textContent = '';
@@ -143,7 +164,9 @@
     lightboxIndex = Math.max(0, lightboxImages.indexOf(img));
 
     showLightboxImage(lightboxIndex);
+    lightboxOpener = img;
     lightbox.hidden = false;
+    if (lightboxClose) lightboxClose.focus();
   }
 
   function moveLightbox(direction) {
@@ -157,7 +180,24 @@
       e.stopPropagation();
       openLightbox(img);
     });
+    makeKeyboardButton(img, `Enlarge image: ${img.alt || 'screenshot'}`, e => {
+      e.stopPropagation();
+      openLightbox(img);
+    });
   });
+
+  // Keep Tab inside the image viewer while it is open
+  if (lightbox) {
+    lightbox.addEventListener('keydown', e => {
+      if (e.key !== 'Tab') return;
+      const focusable = Array.from(lightbox.querySelectorAll('button')).filter(b => !b.hidden);
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+  }
 
   if (lightbox) {
     lightbox.addEventListener('click', closeLightbox);
@@ -280,6 +320,8 @@
       const isActive = item === activeProcessStep;
       item.classList.toggle('is-active', isActive);
       item.classList.toggle('is-dimmed', Boolean(activeProcessStep) && !isActive);
+      const heading = item.querySelector('.process-label h3');
+      if (heading) heading.setAttribute('aria-expanded', String(isActive));
     });
 
     updateAdaptiveProcessArrows(true);
@@ -296,6 +338,12 @@
           setActiveProcessStep(step);
         });
       });
+
+      // The step title is the keyboard target (the number circle is decorative)
+      if (title) {
+        makeKeyboardButton(title, null, () => setActiveProcessStep(step));
+        title.setAttribute('aria-expanded', 'false');
+      }
     });
 
     updateAdaptiveProcessArrows(false);

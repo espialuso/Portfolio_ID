@@ -74,7 +74,7 @@ img {
 .hero {
   display: grid;
   gap: 1.5rem;
-  padding: 4rem 0 2.5rem;
+  padding: 6rem 0 2.5rem; /* room for the speech bubble above the photo */
 }
 
 .hero-copy {
@@ -228,53 +228,60 @@ img {
   justify-content: space-between;
 }
 
+/* Comic speech bubble: pops out ABOVE the photo, tail pointing down to the head,
+   so it never covers the name. Lives in the hero's top padding. */
+.about-photo {
+  align-self: flex-start; /* keeps the photo a perfect circle */
+}
+
 .profile-speech {
   position: absolute;
-  top: 0;
-  left: calc(var(--profile-photo-size) + .7rem);
+  bottom: calc(100% + 22px);
+  left: calc(var(--profile-photo-size) * .55);
   z-index: 4;
-  max-width: min(800px, calc(100vw - 2rem - var(--profile-photo-size)));
-  padding: .22rem .9rem .32rem;
+  width: max-content;
+  max-width: min(760px, calc(100vw - 2rem - var(--profile-photo-size)));
+  padding: .3rem 1.1rem .42rem;
   border: 3px solid rgb(255, 191, 0);
-  border-radius: 999px;
+  border-radius: 2rem;
   background: #fff;
   box-shadow: var(--shadow);
   font-family: 'Caveat', cursive;
-  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-size: clamp(1.6rem, 2.6vw, 2.2rem);
   font-weight: 700;
-  line-height: 1;
+  line-height: 1.05;
   opacity: 0;
   pointer-events: none;
-  transform: translateX(-8px);
-  transition: opacity .2s ease, transform .2s ease;
+  transform: scale(.6);
+  transform-origin: 1.6rem calc(100% + 20px); /* grows out of the tail */
+  transition: opacity .18s ease, transform .4s cubic-bezier(.34, 1.56, .64, 1);
 }
 
 .about-photo:hover + .profile-speech,
 body.is-scrolling .profile-speech {
   opacity: 1;
-  transform: translateX(0);
+  transform: scale(1);
 }
 
 .profile-speech::before,
 .profile-speech::after {
   content: "";
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
 }
 
+/* Tail pointing down-left, towards the photo */
 .profile-speech::before {
-  left: -18px;
-  border-top: 11px solid transparent;
-  border-bottom: 11px solid transparent;
-  border-right: 18px solid rgb(255, 191, 0);
+  top: 100%;
+  left: 1.3rem;
+  border-top: 22px solid rgb(255, 191, 0);
+  border-right: 18px solid transparent;
 }
 
 .profile-speech::after {
-  left: -12px;
-  border-top: 8px solid transparent;
-  border-bottom: 8px solid transparent;
-  border-right: 13px solid #fff;
+  top: calc(100% - 4px);
+  left: calc(1.3rem + 3px);
+  border-top: 17px solid #fff;
+  border-right: 13px solid transparent;
 }
 
 .about-role-text .eyebrow {
@@ -890,6 +897,76 @@ body.is-scrolling .profile-speech {
 
   .hero {
     padding-top: 2.5rem;
+  }
+
+  /* Phones: no hover, so the bubble sits beside the photo and pops in once
+     on load; the name moves to its own line underneath. */
+  .about-role-row {
+    --profile-photo-size: 104px;
+    flex-wrap: wrap;
+    align-items: center;
+    row-gap: 1rem;
+  }
+
+  .about-role-text {
+    flex-basis: 100%;
+  }
+
+  .profile-speech {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    flex: 1;
+    width: auto;
+    max-width: none;
+    margin-left: .6rem;
+    padding: .35rem .8rem .45rem;
+    border-radius: 1.4rem;
+    font-size: 1.45rem;
+    transform-origin: -14px 50%;
+    animation: bubblePop .45s cubic-bezier(.34, 1.56, .64, 1) .6s both;
+  }
+
+  .profile-speech::before {
+    top: 50%;
+    left: -18px;
+    transform: translateY(-50%);
+    border-top: 11px solid transparent;
+    border-bottom: 11px solid transparent;
+    border-right: 18px solid rgb(255, 191, 0);
+  }
+
+  .profile-speech::after {
+    top: 50%;
+    left: -12px;
+    transform: translateY(-50%);
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 13px solid #fff;
+  }
+}
+
+@keyframes bubblePop {
+  from { opacity: 0; transform: scale(.6); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .profile-speech {
+    transform: none;
+    transition: opacity .2s ease;
+  }
+
+  .about-photo:hover + .profile-speech,
+  body.is-scrolling .profile-speech {
+    transform: none;
+  }
+}
+
+@media (max-width: 640px) and (prefers-reduced-motion: reduce) {
+  .profile-speech {
+    animation: none;
+    opacity: 1;
   }
 }
 

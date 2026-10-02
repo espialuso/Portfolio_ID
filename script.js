@@ -14,6 +14,25 @@
 
   let openCard = null;
 
+  // Gallery videos: play only while their panel is open, never for reduced-motion users
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function setPanelVideos(acc, shouldPlay) {
+    acc.querySelectorAll('video').forEach(v => {
+      if (shouldPlay && !reduceMotion.matches) {
+        const p = v.play();
+        if (p && p.catch) p.catch(() => {});
+      } else {
+        v.pause();
+      }
+    });
+  }
+
+  // Using the video controls must not close the panel
+  document.querySelectorAll('.info-images video').forEach(v => {
+    v.addEventListener('click', e => e.stopPropagation());
+  });
+
   function closeCard(id) {
     const cfg = cards[id];
     if (!cfg) return;
@@ -22,6 +41,7 @@
     const btn = document.querySelector(`.info-btn[data-card="${id}"]`);
 
     acc.classList.remove('open');
+    setPanelVideos(acc, false);
     if (card) {
       // Stay on top while sliding back, so the card never passes under its neighbour
       card.classList.add('card-returning');
@@ -58,6 +78,7 @@
     // Force reflow so transition fires
     requestAnimationFrame(() => requestAnimationFrame(() => {
       acc.classList.add('open');
+      setPanelVideos(acc, true);
       if (card) card.classList.add('card-shifted');
       if (btn) btn.setAttribute('aria-expanded', 'true');
     }));

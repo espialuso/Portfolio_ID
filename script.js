@@ -140,6 +140,7 @@
 
   const lightbox = document.querySelector('.lightbox');
   const lightboxImage = document.querySelector('.lightbox-image');
+  const lightboxVideo = document.querySelector('.lightbox-video');
   const lightboxCaption = document.querySelector('.lightbox-caption');
   const lightboxClose = document.querySelector('.lightbox-close');
   const lightboxPrev = document.querySelector('.lightbox-prev');
@@ -157,16 +158,49 @@
     lightboxOpener = null;
     lightboxImage.src = '';
     lightboxImage.alt = '';
+    stopLightboxVideo();
     if (lightboxCaption) lightboxCaption.textContent = '';
     lightboxImages = [];
     lightboxIndex = 0;
     lightboxTitle = '';
   }
 
+  function stopLightboxVideo() {
+    if (!lightboxVideo) return;
+    lightboxVideo.pause();
+    lightboxVideo.hidden = true;
+    lightboxVideo.innerHTML = '';
+    lightboxVideo.removeAttribute('poster');
+    lightboxVideo.load();
+  }
+
+  // A gallery video takes its turn in the viewer, between the images
+  function showLightboxVideo(video) {
+    lightboxImage.hidden = true;
+    lightboxImage.src = '';
+    lightbox.classList.remove('is-tall');
+    lightboxVideo.innerHTML = video.innerHTML;
+    if (video.poster) lightboxVideo.poster = video.poster;
+    lightboxVideo.setAttribute('aria-label', video.getAttribute('aria-label') || 'Video');
+    lightboxVideo.hidden = false;
+    lightboxVideo.load();
+    if (!reduceMotion.matches) {
+      const p = lightboxVideo.play();
+      if (p && p.catch) p.catch(() => {});
+    }
+    if (lightboxCaption) lightboxCaption.textContent = lightboxTitle;
+  }
+
   function showLightboxImage(index) {
     const img = lightboxImages[index];
     if (!img || !lightboxImage) return;
     lightboxIndex = index;
+    if (img.tagName === 'VIDEO') {
+      if (lightboxVideo) showLightboxVideo(img);
+      return;
+    }
+    stopLightboxVideo();
+    lightboxImage.hidden = false;
     lightboxImage.src = img.src;
     lightboxImage.alt = img.alt || 'Expanded image preview';
     // Tall images (diagrams) open at full width and scroll, so their text stays readable
@@ -181,7 +215,7 @@
     const panel = img.closest('.accordion-panel');
     const cardId = panel ? panel.id.replace('acc-', '') : '';
     lightboxTitle = document.querySelector(`.sample-card[data-card="${cardId}"] h3`)?.textContent || '';
-    lightboxImages = panel ? Array.from(panel.querySelectorAll('.info-images img')) : [img];
+    lightboxImages = panel ? Array.from(panel.querySelectorAll('.info-images img, .info-images video')) : [img];
     lightboxIndex = Math.max(0, lightboxImages.indexOf(img));
 
     showLightboxImage(lightboxIndex);
@@ -206,6 +240,11 @@
       openLightbox(img);
     });
   });
+
+  // Using the viewer's video controls must not close the viewer
+  if (lightboxVideo) {
+    lightboxVideo.addEventListener('click', e => e.stopPropagation());
+  }
 
   // Keep Tab inside the image viewer while it is open
   if (lightbox) {

@@ -5,7 +5,9 @@
   --text: #1f2430;
   --muted: #666a73;
   --accent: rgb(255, 192, 0);
-  --accent-dark: #c38b00;
+  --accent-dark: #d97600; /* deeper gold, close to the CV golden #E07A00, readable as a thin line */
+  --tag-bg: #f5f0e6;     /* neutral beige for tags, so yellow is kept for what matters */
+  --tag-border: rgba(31, 36, 48, 0.08);
   --border: rgba(31, 36, 48, 0.10);
   --shadow: 0 12px 30px rgba(31, 36, 48, 0.08);
   --radius: 22px;
@@ -241,6 +243,7 @@ img {
 .about-role-text {
   display: flex;
   flex-direction: column;
+  gap: .5rem;
   align-items: flex-start;
   justify-content: space-between;
 }
@@ -305,6 +308,14 @@ body.is-scrolling .profile-speech {
   margin-bottom: 0;
 }
 
+/* Your name is the page's main title: clearly bigger than the section headings */
+.about-role-row .about-role-text h1 {
+  margin: 0;
+  font-size: clamp(2.2rem, 4.6vw, 3.4rem);
+  letter-spacing: -.035em;
+  line-height: 1.05;
+}
+
 .about-role-text .subtitle {
   margin-bottom: 0;
 }
@@ -326,10 +337,14 @@ body.is-scrolling .profile-speech {
   padding: 1.2rem;
 }
 
-.about-panel p {
-  margin-top: 0;
-  color: var(--muted);
-}
+ .about-panel {
+     max-width: 60rem; /* box ends in line with the subtitle and skills row */
+   }
+
+   .about-panel p {
+     margin-top: 0;
+     color: var(--muted);
+   }
 
 .tags {
   display: flex;
@@ -344,8 +359,8 @@ body.is-scrolling .profile-speech {
   align-items: center;
   padding: .42rem .75rem;
   border-radius: 999px;
-  background: rgba(255,192,0,.14);
-  border: 1px solid rgba(255,192,0,.22);
+  background: var(--tag-bg);
+  border: 1px solid var(--tag-border);
   font-size: .92rem;
 }
 
@@ -478,6 +493,53 @@ body.is-scrolling .profile-speech {
 .info-btn,
 .demo-btn {
   min-width: 96px;
+}
+
+/* Live demo / Podcast page: the strongest action on each card, so it's filled */
+.demo-btn {
+  background: var(--accent);
+  border-color: transparent;
+  color: #1f2430;
+}
+
+.demo-btn:hover {
+  border-color: var(--accent-dark);
+}
+
+/* A row with a single card (the last one): wide horizontal card,
+   details open underneath instead of beside it */
+.sample-row.is-solo {
+  grid-template-columns: 1fr;
+}
+
+.sample-row.is-solo > .sample-card {
+  grid-column: 1;
+  grid-row: 1;
+  flex-direction: row;
+}
+
+.sample-row.is-solo > .sample-card .sample-thumb {
+  width: 50%;
+  flex: 0 0 50%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  align-self: flex-start;
+  object-fit: cover;
+}
+
+.sample-row.is-solo > .accordion-panel,
+.sample-row.is-solo > .accordion-panel:not(.acc-right-col) {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.sample-row.is-solo > .sample-card.card-shifted,
+.sample-row.is-solo > .sample-card.card-shifted:hover {
+  transform: none;
+}
+
+.sample-row.is-solo .info-images {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .accordion-panel {
@@ -696,8 +758,13 @@ body.is-scrolling .profile-speech {
   font-size: 1.2rem;
   font-weight: 800;
   cursor: pointer;
-  animation: processPulse 2s infinite ease-in-out;
   transition: transform .2s ease, box-shadow .2s ease;
+}
+
+/* Pulse twice as a wave when the wheel appears, then stay calm */
+.process-step.is-visible .process-node {
+  animation: processPulse 2s ease-in-out 2;
+  animation-delay: calc(var(--delay) + .6s);
 }
 
 .process-label {
@@ -1013,5 +1080,33 @@ body.is-scrolling .profile-speech {
   .process-step,
   .process-step.is-visible {
     transform: none;
+  }
+}
+/* Wide single card: back to a normal stacked card on small screens */
+@media (max-width: 760px) {
+  .sample-row.is-solo > .sample-card {
+    flex-direction: column;
+  }
+
+  .sample-row.is-solo > .sample-card .sample-thumb {
+    width: 100%;
+    flex: none;
+    aspect-ratio: 16 / 9;
+  }
+
+  .sample-row.is-solo .info-images {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .sample-row.is-solo .info-images {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .process-step.is-visible .process-node {
+    animation: none;
   }
 }

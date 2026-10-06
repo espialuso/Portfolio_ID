@@ -47,6 +47,9 @@
       card.classList.add('card-returning');
       card.classList.remove('card-shifted');
     }
+    // Show the neighbour again as the card slides back over it
+    const closingRow = acc.closest('.sample-row');
+    if (closingRow) closingRow.querySelectorAll('.sample-card.card-covered').forEach(c => c.classList.remove('card-covered'));
     if (btn) btn.setAttribute('aria-expanded', 'false');
 
     setTimeout(() => {
@@ -80,6 +83,11 @@
       acc.classList.add('open');
       setPanelVideos(acc, true);
       if (card) card.classList.add('card-shifted');
+      // Hide the neighbour the open card now covers
+      if (row && card) setTimeout(() => {
+        if (!card.classList.contains('card-shifted')) return; // closed again meanwhile
+        row.querySelectorAll('.sample-card').forEach(c => { if (c !== card) c.classList.add('card-covered'); });
+      }, 250);
       if (btn) btn.setAttribute('aria-expanded', 'true');
     }));
     openCard = id;

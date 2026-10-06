@@ -1259,3 +1259,16 @@ body { background: var(--paper); color: var(--ink); }
   .profile-speech::before { border-right-color: var(--ink); border-top-color: transparent; }
   .about-role-row .about-role-text h1 { font-size: 3.2rem; }
 }
+
+/* Open card: no hover lift (a click closes it; no need to invite it) */
+.sample-card.card-shifted:hover .sample-thumb { transform: none; box-shadow: none; }
+.sample-card.side-left.card-shifted:hover { transform: translateX(calc(100% + 1rem)); }
+.sample-card.side-right.card-shifted:hover { transform: translateX(calc(-100% - 1rem)); }
+
+/* The card that the open card slides over is hidden, so nothing peeks out from behind */
+.sample-card.card-covered { visibility: hidden; }
+@media (max-width: 920px) {
+  .sample-card.side-left.card-shifted:hover,
+  .sample-card.side-right.card-shifted:hover { transform: none; }
+  .sample-card.card-covered { visibility: visible; }
+}

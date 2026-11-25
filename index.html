@@ -244,8 +244,32 @@
 
         <!-- ROW 4 -->
         <div class="sample-row">
-          <!-- Card 5: LEFT -->
-          <article class="sample-card side-left" data-card="5">
+          <!-- Card 10: LEFT -->
+          <article class="sample-card side-left" data-card="10">
+            <img src="images/sample-10.png" alt="Preview of the illustrated guide: How to Correct Content in XML Files" class="sample-thumb" onerror="this.style.display='none'" />
+            <div class="sample-body">
+              <div class="sample-meta"><span>Documentation</span><span>User guide</span><span>Technical overview</span></div>
+              <h3>Technical and user documentation</h3>
+              <p>An illustrated step-by-step user guide and a technical overview with diagrams, two documentation samples from the Erasmus+ OLS programme.</p>
+              <div class="sample-actions">
+                <button class="btn info-btn" data-card="10" aria-expanded="false">Info</button>
+                <a class="btn demo-btn" href="docs/How_to_Correct_Content_in_XML_Files.pdf" target="_blank" rel="noreferrer">XML guide (PDF)</a>
+                <a class="btn demo-btn" href="docs/Taster_Module_Technical_Overview.pdf" target="_blank" rel="noreferrer">Overview (PDF)</a>
+              </div>
+            </div>
+          </article>
+          <!-- Accordion 10: opens RIGHT -->
+          <div id="acc-10" class="accordion-panel side-right" hidden>
+            <p><strong>Tools:</strong> ChatGPT (guided by me to produce the Word documents), Microsoft Word, Affinity (PDF export). Subject systems: Articulate Storyline, Microsoft Excel, Amazon S3, JavaScript, Vimeo.</p>
+            <p><strong>Scope:</strong> One user guide (7 steps) and one 2-page technical overview. Sensitive details are masked.</p>
+            <p>Created with AI assistance: I explained the process, supplied the screen captures I took, guided ChatGPT to draft the Word documents, and reviewed the final output. The user guide walks non-technical collaborators through correcting multilingual text in Storyline modules, from editing the file to verifying the result and archiving the previous version. The technical overview documents an interactive-video module: how Storyline, JavaScript and Vimeo exchange checkpoints, and how text and video are localised. Together they show step-by-step instructions, technical documentation, and version control practice.</p>
+            <div class="info-images">
+              <img src="images/sample-10a.png" alt="Interactive video workflow diagram from the technical overview" onerror="this.style.display='none'" />
+              <img src="images/sample-10b.png" alt="Guide page: Steps 3 and 4, exporting and locating the XML file" onerror="this.style.display='none'" />
+            </div>
+          </div>
+          <!-- Card 5: RIGHT -->
+          <article class="sample-card side-right" data-card="5">
             <img src="images/sample-5.png" alt="Tutor onboarding preview" class="sample-thumb" onerror="this.style.display='none'" />
             <div class="sample-body">
               <div class="sample-meta"><span>Trainer enablement</span><span>Adobe Connect</span><span>Documentation</span></div>
@@ -256,8 +280,8 @@
               </div>
             </div>
           </article>
-          <!-- Accordion 5: opens RIGHT -->
-          <div id="acc-5" class="accordion-panel side-right" hidden>
+          <!-- Accordion 5: card slides left, text appears RIGHT -->
+          <div id="acc-5" class="accordion-panel side-right acc-right-col" hidden>
             <p><strong>Tools:</strong> Adobe Connect, OLS platform, PowerPoint, Microsoft 365.</p>
             <p><strong>Scope:</strong> Tutor onboarding and live delivery support.</p>
             <p>Designed and delivered train-the-trainer sessions, created guidance materials, and supported tutors, showing enablement, adoption support, and practical documentation.</p>
@@ -266,8 +290,12 @@
               <img src="images/sample-5b.png" alt="Tutor onboarding screenshot 2" onerror="this.style.display='none'" />
             </div>
           </div>
-          <!-- Card 8: RIGHT -->
-          <article class="sample-card side-right" data-card="8">
+        </div>
+
+        <!-- ROW 5 -->
+        <div class="sample-row">
+          <!-- Card 8: LEFT -->
+          <article class="sample-card side-left" data-card="8">
             <img src="images/sample-8.png" alt="Branching scenario design document preview" class="sample-thumb" onerror="this.style.display='none'" />
             <div class="sample-body">
               <div class="sample-meta"><span>Instructional Design</span><span>Scenario Planning</span><span>Branching Logic</span></div>
@@ -278,8 +306,8 @@
               </div>
             </div>
           </article>
-          <!-- Accordion 8: card slides left, text appears RIGHT -->
-          <div id="acc-8" class="accordion-panel side-right acc-right-col" hidden>
+          <!-- Accordion 8: opens RIGHT -->
+          <div id="acc-8" class="accordion-panel side-right" hidden>
             <p><strong>Tools:</strong> Lucidchart.</p>
             <p><strong>Scope:</strong> V1 concept draft — 360/Real World A1, Part 1.</p>
             <p>Designed a full branching dialogue for a real-world scenario module, mapping learner choices, consequence paths and feedback states. The diagram documents interaction logic, decision nodes, and designer rationale at the pre-production stage, before any authoring tool development. It is a visual approach to scenario planning: structuring learner agency, anticipating failure paths, and making design decisions explicit and reviewable before build.</p>
@@ -287,12 +315,8 @@
               <img src="images/sample-8a.png" alt="Branching scenario diagram" onerror="this.style.display='none'" />
             </div>
           </div>
-        </div>
-
-        <!-- ROW 5 (single card: shown wide) -->
-        <div class="sample-row is-solo">
-          <!-- Card 7: LEFT -->
-          <article class="sample-card side-left" data-card="7">
+          <!-- Card 7: RIGHT -->
+          <article class="sample-card side-right" data-card="7">
             <img src="images/sample-7c.png" alt="Mobility &amp; Intercultural Podcast page on EU Academy" class="sample-thumb" onerror="this.style.display='none'" />
             <div class="sample-body">
               <div class="sample-meta"><span>Video</span><span>Audio</span><span>Microlearning</span></div>
@@ -304,8 +328,8 @@
               </div>
             </div>
           </article>
-          <!-- Accordion 7: opens RIGHT -->
-          <div id="acc-7" class="accordion-panel side-right" hidden>
+          <!-- Accordion 7: card slides left, text appears RIGHT -->
+          <div id="acc-7" class="accordion-panel side-right acc-right-col" hidden>
             <p><strong>Tools:</strong> PowerPoint, screen capture, Audacity, Reaper, media production workflows.</p>
             <p><strong>Scope:</strong> Video lessons, podcast episodes, tutorials, and media support assets.</p>
             <p>Wrote scripts, appeared on camera for lessons, produced podcasts, and created screen-recorded tutorials, demonstrating communication, media production, and microlearning support.</p>

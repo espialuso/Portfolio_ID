@@ -5,11 +5,12 @@
     2: { acc: 'acc-2', side: 'right' },
     3: { acc: 'acc-3', side: 'left' },
     4: { acc: 'acc-4', side: 'right' },
-    5: { acc: 'acc-5', side: 'left' },
+    5: { acc: 'acc-5', side: 'right' },
     6: { acc: 'acc-6', side: 'right' },
-    7: { acc: 'acc-7', side: 'left' },
-    8: { acc: 'acc-8', side: 'right' },
+    7: { acc: 'acc-7', side: 'right' },
+    8: { acc: 'acc-8', side: 'left' },
     9: { acc: 'acc-9', side: 'left' },
+    10: { acc: 'acc-10', side: 'left' },
   };
 
   let openCard = null;
